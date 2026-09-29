@@ -1,0 +1,215 @@
+:root {
+    --stpb-color: #ff5722;
+    --stpb-height: 50px;
+    --stpb-opacity: 0.8;
+    --stpb-heading-text-size: 16px;
+}
+
+.scroll-progress {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: 90%;
+    max-width: 800px;
+    background: rgba(0, 0, 0, var(--stpb-opacity));
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    z-index: 9999;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: visible;
+}
+
+.scroll-progress::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    animation: shine 3s infinite;
+}
+
+.scroll-progress.active {
+    transform: translateX(-50%) translateY(0);
+}
+
+.scroll-title {
+    color: #fff;
+    font-size: var(--stpb-heading-text-size);
+    margin-bottom: 5px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.scroll-title:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.headings-dropdown {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.scroll-title:hover + .headings-dropdown,
+.headings-dropdown:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.headings-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.headings-dropdown::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.headings-dropdown::-webkit-scrollbar-thumb {
+    background: var(--stpb-color);
+    border-radius: 3px;
+}
+
+.heading-item {
+    color: #fff;
+    padding: 8px 12px;
+    margin: 2px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.heading-item.h3 {
+    font-size: 12px;
+    padding-left: 20px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.heading-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.heading-item.active {
+    background: var(--stpb-color);
+    color: #fff;
+}
+
+.scroll-progress-bar {
+    height: var(--stpb-height);
+    background: linear-gradient(90deg, 
+        var(--stpb-color) 0%,
+        #ff9800 50%,
+        var(--stpb-color) 100%
+    );
+    border-radius: 5px;
+    width: 0;
+    position: relative;
+    overflow: hidden;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: wave 2s infinite;
+}
+
+.scroll-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: wave 2s infinite 0.5s;
+}
+
+@keyframes wave {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes shine {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .scroll-progress {
+        width: 95%;
+        padding: 8px;
+    }
+
+    .scroll-title {
+        font-size: calc(var(--stpb-heading-text-size) * 0.9);
+    }
+
+    .scroll-progress-bar {
+        height: calc(var(--stpb-height) * 0.8);
+    }
+
+    .headings-dropdown {
+        max-height: 200px;
+    }
+}
